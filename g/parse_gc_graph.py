@@ -40,7 +40,7 @@ def parseRoots (f):
   for l in f:
     nm = nodePatt.match(l)
     if nm:
-      addr = nm.group(1)
+      addr = int(nm.group(1),16)
       color = nm.group(2)
       lbl = nm.group(3)
 
@@ -98,11 +98,11 @@ def parseGraph (f):
     e = edgePatt.match(l)
     if e:
       assert(currNode != None)
-      addEdge(currNode, e.group(1), e.group(3))
+      addEdge(currNode, int(e.group(1),16), e.group(3))
     else:
       nm = nodePatt.match(l)
       if nm:
-        currNode = nm.group(1)
+        currNode = int(nm.group(1),16)
         nodeColor = nm.group(2)
         addNode(currNode, nm.group(3))
       elif l[0] == '#':

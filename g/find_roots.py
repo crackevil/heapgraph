@@ -78,13 +78,13 @@ parser.add_argument('--dot-mode-edges', '-de', dest='dot_mode_edges', action='st
 # Path printing
 ########################################################
 
-addrPatt = re.compile('[A-F0-9]+$|0x[a-f0-9]+$')
+addrPatt = re.compile('[a-fA-F0-9]+$|0x[a-fA-F0-9]+$')
 
 
 # print a node description
 def print_node(ga, x):
   # truncate really long nodeLabels.
-  sys.stdout.write('{0} [{1}]'.format(x, ga.nodeLabels[x][:50]))
+  sys.stdout.write('{0} [{1}]'.format(hex(x), ga.nodeLabels[x][:50]))
 
 # print an edge description
 def print_edge(args, ga, x, y):
@@ -406,7 +406,7 @@ def selectTargets(args, g, ga):
   if args.string_mode:
     targs = stringTargets(ga, args.target)
   elif addrPatt.match(args.target):
-    targs = [args.target]
+    targs = [int(args.target,16)]
     if targetDebug:
       sys.stderr.write('Looking for object with address {}.\n'.format(args.target))
   else:
